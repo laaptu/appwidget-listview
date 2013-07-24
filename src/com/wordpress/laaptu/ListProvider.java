@@ -11,7 +11,12 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 /**
  * If you are familiar with Adapter of ListView,this is the same as adapter
  * with few changes
- * 
+ * here it now takes RemoteFetchService ArrayList<ListItem> for data
+ * which is a static ArrayList
+ * and this example won't work if there are multiple widgets and 
+ * they update at same time i.e they modify RemoteFetchService ArrayList at same
+ * time.
+ * For that use Database or other techniquest
  */
 public class ListProvider implements RemoteViewsFactory {
 	private ArrayList<ListItem> listItemList = new ArrayList<ListItem>();
@@ -27,13 +32,8 @@ public class ListProvider implements RemoteViewsFactory {
 	}
 
 	private void populateListItem() {
-		for (int i = 0; i < 10; i++) {
-			ListItem listItem = new ListItem();
-			listItem.heading = "Heading" + i;
-			listItem.content = i
-					+ " This is the content of the app widget listview.Nice content though";
-			listItemList.add(listItem);
-		}
+		listItemList = (ArrayList<ListItem>) RemoteFetchService.listItemList
+				.clone();
 
 	}
 
