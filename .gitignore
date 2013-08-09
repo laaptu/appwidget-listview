@@ -1,9 +1,0 @@
-bin/*
-gen/*
-bin
-gen/
-.proguard-project.txt
-.project
-lint.xml
-.settings/*
-.settings/
