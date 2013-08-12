@@ -16,13 +16,23 @@ public class WidgetProvider extends AppWidgetProvider {
 
 	/*
 	 * this method is called every 30 mins as specified on widgetinfo.xml this
-	 * method is also called on every phone reboot from this method nothing is
-	 * updated right now
+	 * method is also called on every phone reboot so on phone reboot,we need to
+	 * once again update the widget i.e populate the listview of the widget
 	 */
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
-		
+
+		if (PhoneBootCompleteReceiver.wasPhoneBootSucessful) {
+			PhoneBootCompleteReceiver.wasPhoneBootSucessful = false;
+			final int N = appWidgetIds.length;
+			for (int i = 0; i < N; i++) {
+				RemoteViews remoteViews = updateWidgetListView(context,
+						appWidgetIds[i]);
+				appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
+			}
+		}
+
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 
